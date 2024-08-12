@@ -1,0 +1,33 @@
+:root {
+    --color-error: red;
+    --color-input: rgb(74, 32, 181);
+}
+
+.form {}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.legend {
+    text-align: start;
+}
+
+.formInput {
+    display: flex;
+    border-radius: 10px;
+    border-color: var(--color-input);
+    padding: 5px 10px;
+    width: 300px;
+}
+
+.suggestion {
+    color: var(--color-error);
+    border-color: var(--color-error);
+}
+
+.hidden {
+    display: none;
+}
