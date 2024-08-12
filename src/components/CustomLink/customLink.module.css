@@ -1,0 +1,17 @@
+:root {
+  --color-bg: #2c2c32;
+  --color-active: #0f7dc6;
+}
+
+.navLink {
+  padding: '5px';
+  background: transparent;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.active {
+  color: var(--color-active);
+  background: var(--color-bg);
+  cursor: default;
+}
