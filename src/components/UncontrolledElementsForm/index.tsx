@@ -5,6 +5,9 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { setFormData } from '../../redux/slices/selectedFormDataSlice';
 import { useNavigate } from 'react-router-dom';
 
+const validExtensions = ['image/jpeg', 'image/png'];
+const maxSizeInBytes = 2 * 1024 * 1024;
+
 const UncontrolledElementsForm: FC = () => {
   const dispatch = useAppDispatch();
   const countries = useAppSelector((state) => state.selectedCountry.countries);
@@ -103,23 +106,20 @@ const UncontrolledElementsForm: FC = () => {
       setTerms(false);
     }
 
-    // Picture validation
     const pictureValue = pictureRef.current.files?.[0];
     if (pictureValue) {
-      const validExtensions = ['image/jpeg', 'image/png'];
       if (!validExtensions.includes(pictureValue.type)) {
         setImageType(true);
       } else {
         setImageType(false);
       }
-      const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
       if (pictureValue.size > maxSizeInBytes) {
         setImageSize(true);
       } else {
         setImageSize(false);
       }
     }
-    if (!name || !age || !email || !password || !confirmPassword || !terms || !imageType || !imageSize) {
+    if (name || age || email || password || confirmPassword || terms || imageType || imageSize) {
       return false;
     }
     return true;
@@ -127,19 +127,27 @@ const UncontrolledElementsForm: FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      const formData = {
-        name: nameRef.current?.value,
-        age: parseInt(ageRef.current.value, 10),
-        email: emailRef.current?.value,
-        password: passwordRef.current?.value,
-        gender: genderMaleRef.current?.value || genderFemaleRef.current?.value,
-        picture: pictureRef.current?.files[0],
-        country: countryRef.current?.value,
+    if (validateForm() && pictureRef.current?.files) {
+      const file = pictureRef.current.files[0];
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        const picture = reader.result;
+        const formData = {
+          name: nameRef.current?.value || '',
+          age: parseInt(ageRef.current?.value as string, 10) || 0,
+          email: emailRef.current?.value || '',
+          password: passwordRef.current?.value || '',
+          gender: genderMaleRef.current?.value || genderFemaleRef.current?.value || '',
+          picture: picture as string,
+          country: countryRef.current?.value || '',
+        };
+        dispatch(setFormData(formData));
+        navigate('/');
       };
-      dispatch(setFormData(formData));
-      console.log('here');
-      navigate('/');
+      reader.readAsDataURL(file);
+      reader.onerror = function () {
+        throw new Error('Error on file reading');
+      };
     }
   };
 
@@ -169,7 +177,7 @@ const UncontrolledElementsForm: FC = () => {
       <fieldset className="container">
         <legend className={styles.legend}>Password: </legend>
         <label className={styles.label} htmlFor="password">
-          <input className={styles.formInput} id="password" type="password" ref={passwordRef} />
+          <input className={styles.formInput} id="password" type="password" ref={passwordRef} autoComplete="on" />
         </label>
         {password && (
           <p className={cn(styles.suggestion)}>

@@ -21,7 +21,7 @@ const Main: React.FC = () => {
             <p>Email: {formData.email}</p>
             <p>Gender: {formData.gender}</p>
             <p>Country: {formData.country}</p>
-            <img src={formData.picture} alt="Uploaded" className={styles.picture} />
+            <img src={formData.picture} alt="Uploaded image" className={styles.picture} />
           </div>
         )}
       </main>

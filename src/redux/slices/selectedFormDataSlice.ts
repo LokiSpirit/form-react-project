@@ -6,7 +6,7 @@ type FormData = {
   email: string;
   password: string;
   gender: string;
-  picture: string; // base64
+  picture: string;
   country: string;
 }
 

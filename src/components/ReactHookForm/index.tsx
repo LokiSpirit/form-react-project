@@ -51,6 +51,15 @@ const validationSchema = Yup.object().shape({
   country: Yup.string().required('Country is required'),
 });
 
+const convertFileToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
+};
+
 const ReactHookForm: FC = () => {
   const dispatch = useAppDispatch();
   const countries = useAppSelector((state) => state.selectedCountry.countries);
@@ -80,8 +89,18 @@ const ReactHookForm: FC = () => {
     setShowAutocomplete(false);
   };
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    dispatch(setFormData(data));
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    if (data.picture && data.picture[0]) {
+      const base64Picture = await convertFileToBase64(data.picture[0]);
+      dispatch(
+        setFormData({
+          ...data,
+          picture: base64Picture,
+        }),
+      );
+    } else {
+      dispatch(setFormData(data));
+    }
     navigate('/');
   };
 
