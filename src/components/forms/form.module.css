@@ -47,13 +47,12 @@
 
 .suggestion {
     display: flex;
+    flex-direction: column;
     justify-content: start;
     align-items: start;
     text-align: start;
     color: var(--color-error);
     border-color: var(--color-error);
-    white-space: normal;
-    word-wrap: break-word;
 }
 
 .hidden {

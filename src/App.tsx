@@ -2,8 +2,8 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import './App.css';
 import Layout from './components/Layout';
 import Main from './components/Main';
-import UncontrolledElementsForm from './components/UncontrolledElementsForm';
-import ReactHookForm from './components/ReactHookForm';
+import UncontrolledElementsForm from './components/forms/UncontrolledElementsForm';
+import ReactHookForm from './components/forms/ReactHookForm';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
