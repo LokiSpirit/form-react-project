@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { setFormData } from '../../../redux/slices/selectedFormDataSlice';
 import { useNavigate } from 'react-router-dom';
 import { IFormData, validationSchema } from '../../../utils/yup';
+import { evaluatePasswordStrength } from '../../../utils/passwordStrength';
 
 const UncontrolledElementsForm: FC = () => {
   const nameRef = useRef<HTMLInputElement>(null);
@@ -25,6 +26,7 @@ const UncontrolledElementsForm: FC = () => {
   const [filteredCountries, setFilteredCountries] = useState<string[]>([]);
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [strength, setStrength] = useState<null | string>(null);
 
   const handleCountryChange = () => {
     const query = countryRef.current?.value.toLowerCase() || '';
@@ -39,6 +41,10 @@ const UncontrolledElementsForm: FC = () => {
     setShowAutocomplete(false);
   };
 
+  const checkPasswordStrength = (password: string | undefined) => {
+    const ps = password || null;
+    setStrength(evaluatePasswordStrength(ps));
+  };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -52,6 +58,8 @@ const UncontrolledElementsForm: FC = () => {
       picture: pictureRef.current?.files ? pictureRef.current.files[0] : new File([''], 'text.txt'),
       country: countryRef.current?.value || '',
     };
+
+    checkPasswordStrength(passwordRef.current?.value);
 
     try {
       await validationSchema.validate(formData, { abortEarly: false });
@@ -110,7 +118,22 @@ const UncontrolledElementsForm: FC = () => {
           <legend className={styles.legend}>Password: </legend>
           <label className={styles.label} htmlFor="password">
             <input className={styles.formInput} id="password" type="password" ref={passwordRef} autoComplete="on" />
-            {/* { && <small>Password strength: {strength}</small>} */}
+            {strength && (
+              <small>
+                Password strength:&nbsp;
+                <span
+                  className={
+                    strength === 'Weak'
+                      ? styles.strengthWeak
+                      : strength === 'Medium'
+                        ? styles.strengthMedium
+                        : styles.strengthStrong
+                  }
+                >
+                  {strength}
+                </span>
+              </small>
+            )}
           </label>
           {errors.password && (
             <p className={cn(styles.suggestion)}>

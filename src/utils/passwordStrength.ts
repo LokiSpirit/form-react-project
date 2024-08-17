@@ -10,10 +10,9 @@ const evaluatePasswordScore = (password: string) => {
 
 export const evaluatePasswordStrength = (password: string | null): string => {
   if (!password) return '';
-  
+
   const score = evaluatePasswordScore(password);
   switch (score) {
-    case 0:
     case 1:
     case 2:
       return 'Weak';
