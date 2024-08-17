@@ -1,3 +1,7 @@
+:root {
+  --color-active: rgb(74, 32, 181);
+}
+
 .main {
   display: flex;
   flex-direction: column;
@@ -15,7 +19,7 @@
   margin: 0 auto;
   width: 100%;
   column-gap: 20px;
-  background: brown;
+  font-size: 1.5rem;
 }
 
 .tilesContainer {
@@ -29,6 +33,11 @@
   padding: 15px;
   border-radius: 5px;
   width: 300px;
+}
+
+.tile.active {
+  border: 3px dashed var(--color-active);
+  background: linear-gradient(#e66465, #9198e5);
 }
 
 .picture {

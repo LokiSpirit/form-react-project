@@ -1,0 +1,88 @@
+:root {
+    --color-error: red;
+    --color-input: rgb(74, 32, 181);
+}
+
+.form {
+    background-color: beige;
+    width: max-content;
+    height: max-content;
+    padding: 10px;
+    margin: 0 auto;
+    border: 1px solid brown;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
+}
+
+.container.genderContainer {
+    flex-direction: row;
+    justify-content: start;
+    column-gap: 20px;
+}
+
+.submitContainer {
+    display: flex;
+    column-gap: 10px;
+    align-items: baseline;
+    margin-top: 10px;
+}
+
+.legend {
+    text-align: start;
+}
+
+.formInput {
+    display: flex;
+    border-radius: 10px;
+    border-color: var(--color-input);
+    padding: 5px 10px;
+    width: 300px;
+}
+
+.suggestion {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    text-align: start;
+    color: var(--color-error);
+    border-color: var(--color-error);
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.hidden {
+    display: none;
+}
+
+.autocompleteList {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    top: 0;
+    right: 0;
+    transform: translateY(-80%);
+    color: beige;
+    background: rgb(193, 98, 179);
+    list-style-type: none;
+    padding: 10px;
+    width: max-content;
+    border-radius: 10px;
+}
+
+.autocompleteItem {
+    text-align: start;
+    cursor: pointer;
+}
+
+.formButton {
+    background: rgb(91, 49, 91);
+    color: white;
+}

@@ -3,6 +3,7 @@ import styles from './main.module.css';
 import { CustomLink } from '../CustomLink';
 import { useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
+import cn from 'classnames';
 
 const Main: React.FC = () => {
   const formData = useAppSelector((store: RootState) => store.selectedFormData.formData);
@@ -13,17 +14,20 @@ const Main: React.FC = () => {
         <CustomLink to="rform">React Form</CustomLink>
       </nav>
       <main className={styles.main}>
-        {formData && (
-          <div className={styles.tile}>
-            <h2>User Data</h2>
-            <p>Name: {formData.name}</p>
-            <p>Age: {formData.age}</p>
-            <p>Email: {formData.email}</p>
-            <p>Gender: {formData.gender}</p>
-            <p>Country: {formData.country}</p>
-            <img src={formData.picture} alt="Uploaded image" className={styles.picture} />
-          </div>
-        )}
+        <div className={styles.tilesContainer}>
+          {!!formData.length &&
+            formData.map((data, index) => (
+              <div key={index} className={cn(styles.tile, index === 0 ? styles.active : '')}>
+                <h2>User Data</h2>
+                <p>Name: {data.name}</p>
+                <p>Age: {data.age}</p>
+                <p>Email: {data.email}</p>
+                <p>Gender: {data.gender}</p>
+                <p>Country: {data.country}</p>
+                <img src={data.picture} alt="Uploaded image" className={styles.picture} />
+              </div>
+            ))}
+        </div>
       </main>
     </>
   );
