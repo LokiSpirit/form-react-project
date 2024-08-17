@@ -12,6 +12,10 @@
     border: 1px solid brown;
 }
 
+.form.react {
+    background-color: rgb(171, 171, 55);
+}
+
 .container {
     position: relative;
     display: flex;
@@ -43,6 +47,10 @@
     border-color: var(--color-input);
     padding: 5px 10px;
     width: 300px;
+}
+
+.formInput.react {
+    background-color: rgb(247, 230, 210);
 }
 
 .suggestion {
@@ -84,4 +92,16 @@
 .formButton {
     background: rgb(91, 49, 91);
     color: white;
+}
+
+.strengthWeak {
+    color: red;
+}
+
+.strengthMedium {
+    color: blue;
+}
+
+.strengthStrong {
+    color: green;
 }
